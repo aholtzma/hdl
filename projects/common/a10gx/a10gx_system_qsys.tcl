@@ -199,8 +199,8 @@ add_connection sys_cpu.instruction_master sys_ddr3_cntrl.ctrl_amm_0
 add_connection sys_cpu.data_master sys_ddr3_cntrl.ctrl_amm_0
 set_connection_parameter_value sys_cpu.data_master/sys_ddr3_cntrl.ctrl_amm_0 baseAddress {0x0}
 set_connection_parameter_value sys_cpu.instruction_master/sys_ddr3_cntrl.ctrl_amm_0 baseAddress {0x0}
-set_connection_parameter_value sys_cpu.instruction_master/sys_cpu.debug_mem_slave baseAddress {0x10180800}
-set_connection_parameter_value sys_cpu.instruction_master/sys_int_mem.s1 baseAddress {0x10140000}
+set_connection_parameter_value sys_cpu.instruction_master/sys_cpu.debug_mem_slave baseAddress {0x10040000}
+set_connection_parameter_value sys_cpu.instruction_master/sys_int_mem.s1 baseAddress {0x10000000}
 set_connection_parameter_value sys_cpu.tightly_coupled_instruction_master_0/sys_tlb_mem.s2 baseAddress {0x10200000}
 set_connection_parameter_value sys_cpu.tightly_coupled_data_master_0/sys_tlb_mem.s1 baseAddress {0x10200000}
 
@@ -431,23 +431,24 @@ set_interface_property pr_rom_data_nc EXPORT_OF axi_sysid_0.if_pr_rom_data
 
 # base-addresses
 
-ad_cpu_interconnect 0x00180800 sys_cpu.debug_mem_slave
-ad_cpu_interconnect 0x00140000 sys_int_mem.s1
-ad_cpu_interconnect 0x00181000 sys_ethernet.control_port
-ad_cpu_interconnect 0x001814a0 sys_ethernet_dma_rx.csr
-ad_cpu_interconnect 0x001814e0 sys_ethernet_dma_rx.response
-ad_cpu_interconnect 0x00181440 sys_ethernet_dma_rx.descriptor_slave
-ad_cpu_interconnect 0x00181480 sys_ethernet_dma_tx.csr
-ad_cpu_interconnect 0x00181460 sys_ethernet_dma_tx.descriptor_slave
-ad_cpu_interconnect 0x001814e8 sys_id.control_slave
-ad_cpu_interconnect 0x00181420 sys_timer_1.s1
-ad_cpu_interconnect 0x00181520 sys_timer_2.s1
-ad_cpu_interconnect 0x001814f0 sys_uart.avalon_jtag_slave
-ad_cpu_interconnect 0x001814d0 sys_gpio_bd.s1
-ad_cpu_interconnect 0x001814c0 sys_gpio_in.s1
-ad_cpu_interconnect 0x00181500 sys_gpio_out.s1
-ad_cpu_interconnect 0x00181400 sys_spi.spi_control_port
-ad_cpu_interconnect 0x00190000 axi_sysid_0.s_axi
+ad_cpu_interconnect 0x00000000 sys_int_mem.s1
+ad_cpu_interconnect 0x00040000 sys_cpu.debug_mem_slave
+
+ad_cpu_interconnect 0x00000800 sys_ethernet.control_port "avl_mm_peripheral_bridge" 0x00050000
+ad_cpu_interconnect 0x00000C00 sys_ethernet_dma_rx.descriptor_slave "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000C20 sys_ethernet_dma_tx.descriptor_slave "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000C40 sys_ethernet_dma_rx.csr "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000C60 sys_ethernet_dma_tx.csr "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000C80 sys_ethernet_dma_rx.response "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000C88 sys_id.control_slave "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000CA0 sys_spi.spi_control_port "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000CC0 sys_timer_1.s1 "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000CE0 sys_timer_2.s1 "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000D00 sys_gpio_bd.s1 "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000D10 sys_gpio_in.s1 "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000D20 sys_gpio_out.s1 "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00000D30 sys_uart.avalon_jtag_slave "avl_mm_peripheral_bridge"
+ad_cpu_interconnect 0x00008000 axi_sysid_0.s_axi "avl_mm_peripheral_bridge"
 
 # dma interconnects
 

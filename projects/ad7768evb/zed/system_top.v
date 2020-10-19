@@ -109,6 +109,14 @@ module system_top (
   wire            adc_valid;
   wire            adc_sync;
   wire    [31:0]  adc_data;
+  wire    [31:0]  adc_data_0;
+  wire    [31:0]  adc_data_1;
+  wire    [31:0]  adc_data_2;
+  wire    [31:0]  adc_data_3;
+  wire    [31:0]  adc_data_4;
+  wire    [31:0]  adc_data_5;
+  wire    [31:0]  adc_data_6;
+  wire    [31:0]  adc_data_7;
   wire            up_sshot;
   wire    [ 1:0]  up_format;
   wire            up_crc_enable;
@@ -181,6 +189,14 @@ module system_top (
     .adc_valid (adc_valid),
     .adc_sync (adc_sync),
     .adc_data (adc_data),
+	.adc_data_0 (adc_data_0),
+	.adc_data_1 (adc_data_1),
+	.adc_data_2 (adc_data_2),
+	.adc_data_3 (adc_data_3),
+	.adc_data_4 (adc_data_4),
+	.adc_data_5 (adc_data_5),
+	.adc_data_6 (adc_data_6),
+	.adc_data_7 (adc_data_7),
     .up_sshot (up_sshot),
     .up_format (up_format),
     .up_crc_enable (up_crc_enable),
@@ -191,6 +207,14 @@ module system_top (
   system_wrapper i_system_wrapper (
     .adc_clk (adc_clk),
     .adc_data (adc_data),
+	.adc_data_0 (adc_data_0),
+	.adc_data_1 (adc_data_1),
+	.adc_data_2 (adc_data_2),
+	.adc_data_3 (adc_data_3),
+	.adc_data_4 (adc_data_4),
+	.adc_data_5 (adc_data_5),
+	.adc_data_6 (adc_data_6),
+	.adc_data_7 (adc_data_7),
     .adc_gpio_0_i (adc_gpio_i[31:0]),
     .adc_gpio_0_o (adc_gpio_o[31:0]),
     .adc_gpio_0_t (adc_gpio_t[31:0]),

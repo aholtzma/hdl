@@ -169,8 +169,6 @@ module system_top (
   assign eth_mdio_i = eth_mdio;
   assign eth_mdio = (eth_mdio_t == 1'b1) ? 1'bz : eth_mdio_o;
 
-  assign ddr3_a[14:12] = 3'd0;
-
   assign gpio_i[31:27] = gpio_o[31:27];
   assign gpio_i[26:16] = gpio_bd_i;
   assign gpio_i[15: 0] = gpio_o[15: 0];
@@ -192,7 +190,7 @@ module system_top (
   system_bd i_system_bd (
     .sys_ddr3_cntrl_mem_mem_ck (ddr3_clk_p),
     .sys_ddr3_cntrl_mem_mem_ck_n (ddr3_clk_n),
-    .sys_ddr3_cntrl_mem_mem_a (ddr3_a[11:0]),
+    .sys_ddr3_cntrl_mem_mem_a (ddr3_a),
     .sys_ddr3_cntrl_mem_mem_ba (ddr3_ba),
     .sys_ddr3_cntrl_mem_mem_cke (ddr3_cke),
     .sys_ddr3_cntrl_mem_mem_cs_n (ddr3_cs_n),

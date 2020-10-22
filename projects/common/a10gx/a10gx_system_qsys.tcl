@@ -55,7 +55,7 @@ set_instance_parameter_value sys_ddr3_cntrl {PHY_DDR3_USER_DATA_IN_MODE_ENUM} {I
 set_instance_parameter_value sys_ddr3_cntrl {PHY_DDR3_USER_PLL_REF_CLK_IO_STD_ENUM} {IO_STD_LVDS}
 set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_FORMAT_ENUM} {MEM_FORMAT_UDIMM}
 set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_DQ_WIDTH} {64}
-set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_ROW_ADDR_WIDTH} {12}
+set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_ROW_ADDR_WIDTH} {15}
 set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_COL_ADDR_WIDTH} {10}
 set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_BANK_ADDR_WIDTH} {3}
 set_instance_parameter_value sys_ddr3_cntrl {MEM_DDR3_DM_EN} {1}
@@ -197,21 +197,21 @@ add_connection sys_cpu.tightly_coupled_instruction_master_0 sys_tlb_mem.s2
 add_connection sys_cpu.tightly_coupled_data_master_0 sys_tlb_mem.s1
 add_connection sys_cpu.instruction_master sys_ddr3_cntrl.ctrl_amm_0
 add_connection sys_cpu.data_master sys_ddr3_cntrl.ctrl_amm_0
-set_connection_parameter_value sys_cpu.data_master/sys_ddr3_cntrl.ctrl_amm_0 baseAddress {0x0}
-set_connection_parameter_value sys_cpu.instruction_master/sys_ddr3_cntrl.ctrl_amm_0 baseAddress {0x0}
-set_connection_parameter_value sys_cpu.instruction_master/sys_cpu.debug_mem_slave baseAddress {0x10040000}
-set_connection_parameter_value sys_cpu.instruction_master/sys_int_mem.s1 baseAddress {0x10000000}
-set_connection_parameter_value sys_cpu.tightly_coupled_instruction_master_0/sys_tlb_mem.s2 baseAddress {0x10200000}
-set_connection_parameter_value sys_cpu.tightly_coupled_data_master_0/sys_tlb_mem.s1 baseAddress {0x10200000}
+set_connection_parameter_value sys_cpu.data_master/sys_ddr3_cntrl.ctrl_amm_0 baseAddress {0x80000000}
+set_connection_parameter_value sys_cpu.instruction_master/sys_ddr3_cntrl.ctrl_amm_0 baseAddress {0x80000000}
+set_connection_parameter_value sys_cpu.instruction_master/sys_cpu.debug_mem_slave baseAddress {0x00040000}
+set_connection_parameter_value sys_cpu.instruction_master/sys_int_mem.s1 baseAddress {0x00000000}
+set_connection_parameter_value sys_cpu.tightly_coupled_instruction_master_0/sys_tlb_mem.s2 baseAddress {0x00200000}
+set_connection_parameter_value sys_cpu.tightly_coupled_data_master_0/sys_tlb_mem.s1 baseAddress {0x00200000}
 
 add_connection sys_cpu.data_master sys_flash.uas
 set_connection_parameter_value sys_cpu.data_master/sys_flash.uas arbitrationPriority {1}
-set_connection_parameter_value sys_cpu.data_master/sys_flash.uas baseAddress {0x11000000}
+set_connection_parameter_value sys_cpu.data_master/sys_flash.uas baseAddress {0x01000000}
 set_connection_parameter_value sys_cpu.data_master/sys_flash.uas defaultConnection {0}
 
 add_connection sys_cpu.instruction_master sys_flash.uas
 set_connection_parameter_value sys_cpu.instruction_master/sys_flash.uas arbitrationPriority {1}
-set_connection_parameter_value sys_cpu.instruction_master/sys_flash.uas baseAddress {0x11000000}
+set_connection_parameter_value sys_cpu.instruction_master/sys_flash.uas baseAddress {0x01000000}
 set_connection_parameter_value sys_cpu.instruction_master/sys_flash.uas defaultConnection {0}
 
 # cpu/hps handling
@@ -224,13 +224,11 @@ proc ad_cpu_interrupt {m_irq m_port} {
 }
 
 # Creates a connection to the main memory interconnect with or without a bridge
-# The direct connection's or the bridge base address must be above 0x10000000,
-# being the first 256MB space occupied by the DDR3
-proc ad_cpu_interconnect {m_base m_port {avl_bridge ""} {avl_bridge_baseaddr 0x10000000}} {
+proc ad_cpu_interconnect {m_base m_port {avl_bridge ""} {avl_bridge_baseaddr 0x00000000}} {
 
   if {[string equal ${avl_bridge} ""]} {
     add_connection sys_cpu.data_master ${m_port}
-    set_connection_parameter_value sys_cpu.data_master/${m_port} baseAddress [expr ($m_base + 0x10000000)]
+    set_connection_parameter_value sys_cpu.data_master/${m_port} baseAddress $m_base
   } else {
     if {[lsearch -exact [get_instances] ${avl_bridge}] == -1} {
       ## Instantiate the bridge and connect the interfaces
@@ -238,7 +236,7 @@ proc ad_cpu_interconnect {m_base m_port {avl_bridge ""} {avl_bridge_baseaddr 0x1
       set_instance_parameter_value ${avl_bridge} {USE_AUTO_ADDRESS_WIDTH} {1}
       set_instance_parameter_value ${avl_bridge} {SYNC_RESET} {1}
       add_connection sys_cpu.data_master ${avl_bridge}.s0
-      set_connection_parameter_value sys_cpu.data_master/${avl_bridge}.s0 baseAddress [expr (${avl_bridge_baseaddr} + 0x10000000)]
+      set_connection_parameter_value sys_cpu.data_master/${avl_bridge}.s0 baseAddress $avl_bridge_baseaddr
       add_connection sys_clk.clk ${avl_bridge}.clk
       add_connection sys_clk.clk_reset ${avl_bridge}.reset
     }

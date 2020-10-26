@@ -107,6 +107,14 @@ module system_top (
 
   wire            adc_clk;
   wire            adc_valid;
+  wire            adc_valid_0;
+  wire            adc_valid_1;
+  wire            adc_valid_2;
+  wire            adc_valid_3;
+  wire            adc_valid_4;
+  wire            adc_valid_5;
+  wire            adc_valid_6;
+  wire            adc_valid_7;
   wire            adc_sync;
   wire    [31:0]  adc_data;
   wire    [31:0]  adc_data_0;
@@ -187,6 +195,14 @@ module system_top (
     .data_in (data_in),
     .adc_clk (adc_clk),
     .adc_valid (adc_valid),
+	.adc_valid_0 (adc_valid_0),
+	.adc_valid_1 (adc_valid_1),
+	.adc_valid_2 (adc_valid_2),
+	.adc_valid_3 (adc_valid_3),
+	.adc_valid_4 (adc_valid_4),
+	.adc_valid_5 (adc_valid_5),
+	.adc_valid_6 (adc_valid_6),
+	.adc_valid_7 (adc_valid_7),
     .adc_sync (adc_sync),
     .adc_data (adc_data),
 	.adc_data_0 (adc_data_0),
@@ -222,6 +238,14 @@ module system_top (
     .adc_gpio_1_o (adc_gpio_o[63:32]),
     .adc_gpio_1_t (adc_gpio_t[63:32]),
     .adc_valid (adc_valid),
+	.adc_valid_0 (adc_valid_0),
+	.adc_valid_1 (adc_valid_1),
+	.adc_valid_2 (adc_valid_2),
+	.adc_valid_3 (adc_valid_3),
+	.adc_valid_4 (adc_valid_4),
+	.adc_valid_5 (adc_valid_5),
+	.adc_valid_6 (adc_valid_6),
+	.adc_valid_7 (adc_valid_7),
     .adc_sync (adc_sync),
     .ddr_addr (ddr_addr),
     .ddr_ba (ddr_ba),

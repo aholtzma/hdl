@@ -47,6 +47,14 @@ module ad7768_if (
 
   output                  adc_clk,
   output  reg             adc_valid,
+  (* mark_debug = "true" *) output  reg             adc_valid_0,
+  (* mark_debug = "true" *) output  reg             adc_valid_1,
+  (* mark_debug = "true" *) output  reg             adc_valid_2,
+  (* mark_debug = "true" *) output  reg             adc_valid_3,
+  (* mark_debug = "true" *) output  reg             adc_valid_4,
+  (* mark_debug = "true" *) output  reg             adc_valid_5,
+  (* mark_debug = "true" *) output  reg             adc_valid_6,
+  (* mark_debug = "true" *) output  reg             adc_valid_7,
   output  reg [ 31:0]     adc_data,
   output  reg [ 31:0]     adc_data_0,
   output  reg [ 31:0]     adc_data_1,
@@ -108,23 +116,23 @@ module ad7768_if (
   reg     [255:0]   adc_ch_data_d5 = 'd0;
   reg     [255:0]   adc_ch_data_d6 = 'd0;
   reg     [255:0]   adc_ch_data_d7 = 'd0;
-  reg               adc_ch_valid_0 = 'd0;
-  reg               adc_ch_valid_1 = 'd0;
-  reg               adc_ch_valid_2 = 'd0;
-  reg               adc_ch_valid_3 = 'd0;
-  reg               adc_ch_valid_4 = 'd0;
-  reg               adc_ch_valid_5 = 'd0;
-  reg               adc_ch_valid_6 = 'd0;
-  reg               adc_ch_valid_7 = 'd0;
-  reg     [ 31:0]   adc_ch_data_0 = 'd0;
-  reg     [ 31:0]   adc_ch_data_1 = 'd0;
-  reg     [ 31:0]   adc_ch_data_2 = 'd0;
-  reg     [ 31:0]   adc_ch_data_3 = 'd0;
-  reg     [ 31:0]   adc_ch_data_4 = 'd0;
-  reg     [ 31:0]   adc_ch_data_5 = 'd0;
-  reg     [ 31:0]   adc_ch_data_6 = 'd0;
-  reg     [ 31:0]   adc_ch_data_7 = 'd0;
-  reg               adc_ch_valid = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_0 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_1 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_2 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_3 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_4 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_5 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_6 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid_7 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_0 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_1 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_2 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_3 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_4 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_5 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_6 = 'd0;
+  (* mark_debug = "true" *) reg     [ 31:0]   adc_ch_data_7 = 'd0;
+  (* mark_debug = "true" *) reg               adc_ch_valid = 'd0;
   reg     [255:0]   adc_ch_data = 'd0;
   reg     [  8:0]   adc_cnt_p = 'd0;
   reg               adc_valid_p = 'd0;
@@ -145,7 +153,7 @@ module ad7768_if (
   reg     [ 35:0]   adc_status_clr_m1 = 'd0;
   reg     [ 35:0]   adc_status_clr = 'd0;
   reg     [ 35:0]   adc_status_clr_d = 'd0;
-  reg               adc_valid_d = 'd0;
+  (* mark_debug = "true" *) reg               adc_valid_d = 'd0;
 
   // internal signals
 
@@ -160,8 +168,8 @@ module ad7768_if (
   wire              adc_cnt_enable_4_s;
   wire              adc_cnt_enable_8_s;
   wire              adc_cnt_enable_s;
-  wire    [  7:0]   adc_data_in_s;
-  wire              adc_ready_in_s;
+  (* mark_debug = "true" *) wire    [  7:0]   adc_data_in_s;
+  (* mark_debug = "true" *) wire              adc_ready_in_s;
   wire              adc_clk_in_s;
   wire    [ 35:0]   adc_status_clr_s;
 
@@ -263,15 +271,49 @@ module ad7768_if (
   always @(posedge adc_clk) begin
     adc_valid <= adc_valid_int & adc_enable_int;
     adc_data <= {{8{adc_data_int[23]}}, adc_data_int[23:0]};
-	adc_data_0 <= adc_ch_data_0;
-	adc_data_1 <= adc_ch_data_1;
-	adc_data_2 <= adc_ch_data_2;
-	adc_data_3 <= adc_ch_data_3;
-	adc_data_4 <= adc_ch_data_4;
-	adc_data_5 <= adc_ch_data_5;
-	adc_data_6 <= adc_ch_data_6;
-	adc_data_7 <= adc_ch_data_7;
+	if (adc_ch_valid_0 == 1'b1)
+	begin	
+	  adc_data_0 <= adc_ch_data_0;
+	end
+	if (adc_ch_valid_1 == 1'b1)
+	begin
+	  adc_data_1 <= adc_ch_data_1;
+	end
+	if (adc_ch_valid_2 == 1'b1)
+	begin
+	  adc_data_2 <= adc_ch_data_2;
+	end
+	if (adc_ch_valid_3 == 1'b1)
+	begin
+	  adc_data_3 <= adc_ch_data_3;
+	end
+	if (adc_ch_valid_4 == 1'b1)
+	begin
+	  adc_data_4 <= adc_ch_data_4;
+	end
+	if (adc_ch_valid_5 == 1'b1)
+	begin
+	  adc_data_5 <= adc_ch_data_5;
+	end
+	if (adc_ch_valid_6 == 1'b1)
+	begin
+	  adc_data_6 <= adc_ch_data_6;
+	end
+	if (adc_ch_valid_7 == 1'b1)
+	begin
+	  adc_data_7 <= adc_ch_data_7;
+	end
     adc_seq <= adc_seq_int;
+	
+	adc_valid_0 <= adc_ch_valid_7;
+	adc_valid_1 <= adc_ch_valid_7;
+	adc_valid_2 <= adc_ch_valid_7;
+	adc_valid_3 <= adc_ch_valid_7;
+	adc_valid_4 <= adc_ch_valid_7;
+	adc_valid_5 <= adc_ch_valid_7;
+	adc_valid_6 <= adc_ch_valid_7;
+	adc_valid_7 <= adc_ch_valid_7;
+	
     if ((adc_crc_enable == 1'b1) && (adc_crc_scnt_int == 4'd0)) begin
       adc_status[4] <= adc_crc_mismatch_8[7] & adc_enable_int;
       adc_status[3] <= 1'b0;

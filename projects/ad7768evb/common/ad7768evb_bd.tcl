@@ -14,6 +14,7 @@ create_bd_port -dir O -from 31 -to 0 adc_gpio_1_t
 
 for {set i 0} {$i < $num_of_channels} {incr i} {
   create_bd_port -dir I -from 31 -to 0 adc_data_$i
+  create_bd_port -dir I adc_valid_$i
 };
 
 if { $num_of_channels == 1 } {
@@ -68,7 +69,7 @@ ad_ip_parameter util_ad7768_adc_pack CONFIG.SAMPLE_DATA_WIDTH 32
 
 ad_connect adc_clk util_ad7768_adc_pack/clk
 ad_connect sys_rstgen/peripheral_reset util_ad7768_adc_pack/reset
-ad_connect adc_valid util_ad7768_adc_pack/fifo_wr_en
+ad_connect adc_valid_0 util_ad7768_adc_pack/fifo_wr_en
 
 for {set i 0} {$i < $num_of_channels} {incr i} {
   ad_connect adc_data_$i util_ad7768_adc_pack/fifo_wr_data_$i
@@ -108,7 +109,7 @@ ad_connect  adc_gpio_1_t ad7768_gpio/gpio2_io_t
 
 ad_cpu_interrupt ps-13 mb-13  ad7768_dma/irq
 ad_cpu_interrupt ps-12 mb-12  ad7768_gpio/ip2intc_irpt
-ad_cpu_interrupt ps-10 mb-10  ad7768_dma_2/irq
+#ad_cpu_interrupt ps-10 mb-10  ad7768_dma_2/irq
 
 # cpu / memory interconnects
 

@@ -4,13 +4,6 @@
 create_bd_port -dir I adc_clk
 create_bd_port -dir I adc_valid
 create_bd_port -dir I adc_valid_0
-create_bd_port -dir I adc_valid_1
-create_bd_port -dir I adc_valid_2
-create_bd_port -dir I adc_valid_3
-create_bd_port -dir I adc_valid_4
-create_bd_port -dir I adc_valid_5
-create_bd_port -dir I adc_valid_6
-create_bd_port -dir I adc_valid_7
 create_bd_port -dir I adc_sync
 create_bd_port -dir I -from 31 -to 0 adc_data
 create_bd_port -dir I -from 31 -to 0 adc_data_0

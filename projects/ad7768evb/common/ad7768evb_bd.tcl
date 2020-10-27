@@ -83,6 +83,8 @@ for {set i 0} {$i < 8} {incr i} {
 
 # interconnects
 
+ad_connect  sys_cpu_resetn ad7768_dma/m_dest_axi_aresetn
+ad_connect  sys_cpu_resetn ad7768_dma_2/m_dest_axi_aresetn
 ad_connect  adc_clk ad7768_dma/fifo_wr_clk
 ad_connect  adc_valid ad7768_dma/fifo_wr_en
 ad_connect  adc_sync ad7768_dma/fifo_wr_sync
